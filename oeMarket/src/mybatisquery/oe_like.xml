@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="oe.market.like.dao.OeLikeDAO">
+
+<select id="oeLikeSelect" parameterType="oelikevo" resultType="oelikevo">
+	
+		SELECT 	A.OLNUM		OLNUM
+		FROM	OELIKE A
+		WHERE	A.DELETEYN = 'Y'
+		AND		A.BNUM = #{bnum}
+		AND		A.ONUM = #{onum}
+
+</select>
+
+<select id="oeLikeSelectAll" parameterType="oelikevo" resultType="oelikevo">
+	
+		SELECT *
+		FROM	OELIKE A
+		WHERE	A.DELETEYN = 'Y'
+		AND		A.BNUM = #{bnum}
+		AND		A.ONUM = #{onum}
+
+</select>
+
+<insert id="oeLikeInsert" parameterType="oelikevo">
+
+	INSERT INTO OELIKE ( OLNUM, BNUM, ONUM, DELETEYN, INSERTDATE, UPDATEDATE)
+			VALUES( (SELECT NVL(MAX(OLNUM), 0) + 1 AS OLNUM FROM OELIKE),
+				#{bnum},
+				#{onum},
+				'Y',
+				SYSDATE,
+				SYSDATE)
+
+</insert>
+
+<update id="oeLikeUpdate" parameterType="oelikevo" >
+
+	UPDATE OELIKE
+	   SET LIKECNT = LIKECNT + 1
+	   	  ,UPDATEDATE = SYSDATE
+	 WHERE BNUM = #{bnum}
+	 AND   ONUM = #{onum}
+
+</update>
+
+</mapper>          

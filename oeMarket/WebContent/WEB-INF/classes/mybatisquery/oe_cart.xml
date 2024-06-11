@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+<mapper namespace="oe.market.cart.dao.OeCartDAO">
+
+  <insert id="oeCartInsert" parameterType="oe.market.cart.vo.OeCartVO">
+        INSERT INTO OECART (OCNUM, OID, BNUM, DELETEYN) 
+        VALUES (#{ocnum, jdbcType=VARCHAR}, #{oid, jdbcType=VARCHAR},
+                #{bnum, jdbcType=VARCHAR}, #{deleteyn, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="oeCartSelect" parameterType="oe.market.cart.vo.OeCartVO" resultType="oe.market.cart.vo.OeCartVO">
+        SELECT A.OCNUM, A.OID, A.BNUM, A.DELETEYN, 
+               B.BTITLE, B.BCONTENT, B.BPHOTO, B.BPRICE, B.INSERTDATE, B.UPDATEDATE
+        FROM OECART A
+        LEFT JOIN OEBOARD B ON A.BNUM = B.BNUM
+        WHERE A.OID = #{oid, jdbcType=VARCHAR}
+        AND A.DELETEYN = 'Y'
+    </select>
+
+    <update id="oeCartUpdate" parameterType="oe.market.cart.vo.OeCartVO">
+        UPDATE OECART
+        SET DELETEYN = #{deleteyn, jdbcType=VARCHAR}
+        WHERE OID = #{oid, jdbcType=VARCHAR}
+        AND BNUM = #{bnum, jdbcType=VARCHAR}
+    </update>
+    
+    <select id="oeCartCheck" parameterType="oe.market.cart.vo.OeCartVO" resultType="oe.market.cart.vo.OeCartVO">
+        SELECT A.OCNUM, A.OID, A.BNUM, A.DELETEYN
+        FROM OECART A
+        WHERE A.OID = #{oid, jdbcType=VARCHAR} 
+        AND A.BNUM = #{bnum, jdbcType=VARCHAR}
+        AND ROWNUM = 1
+    </select>
+</mapper>

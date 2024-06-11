@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+<mapper namespace="oe.market.board.dao.OeBoardDAO">
+
+<insert id="oeBoardInsert" parameterType="oeboardvo" >
+ 
+	INSERT INTO OEBOARD (	BNUM, OID, BTITLE, 
+							BPHOTO, BCONTENT, BPRICE,
+							INSERTDATE, UPDATEDATE, DELETEYN, BPW)
+           			VALUES( #{bnum, jdbcType=VARCHAR}, 
+           					#{oid, jdbcType=VARCHAR}, 
+           					#{btitle, jdbcType=VARCHAR}, 
+           					#{bphoto, jdbcType=VARCHAR}, 
+           					#{bcontent, jdbcType=VARCHAR}, 
+           					#{bprice, jdbcType=VARCHAR},             					
+           					SYSDATE, 
+           					SYSDATE,
+           					'Y',
+           					#{bpw, jdbcType=VARCHAR})
+</insert>
+<select id="oeBoardSelectAll" parameterType="oeboardvo" resultType="oeboardvo">
+    SELECT * FROM (
+        SELECT  A.BNUM      BNUM
+               ,A.OID       OID
+               ,A.BTITLE    BTITLE
+               ,A.BPHOTO    BPHOTO
+               ,A.BCONTENT  BCONTENT
+               ,A.BPRICE    BPRICE 
+               ,TO_CHAR(A.INSERTDATE, 'YYYY-MM-DD') INSERTDATE
+               ,TO_CHAR(A.UPDATEDATE, 'YYYY-MM-DD') UPDATEDATE    
+               ,A.DELETEYN  DELETEYN
+               ,A.BPW       BPW   
+               ,A.BHIT      BHIT 
+               ,B.ONAME     ONAME
+               ,B.OEMAIL    OEMAIL
+               ,CEIL(ROW_NUMBER() OVER(ORDER BY A.BNUM)/ #{pageSize} ) pageSize 
+               ,COUNT(A.BNUM) OVER() AS totalCount       
+        FROM    OEBOARD A
+        LEFT JOIN OEMEMBER B ON A.OID = B.OID
+        WHERE   A.DELETEYN = 'Y'    
+        ORDER BY 1 DESC  
+    ) WHERE pageSize = #{curPage}
+</select>
+
+<select id="oeBoardPwCheck" parameterType="oeboardvo" resultType="oeboardvo">	
+	
+		SELECT 	A.BNUM 		BNUM		    
+		       ,A.BPW 		BPW		   		     
+		FROM 	OEBOARD A
+		WHERE 	A.DELETEYN = 'Y' 
+		AND     A.BNUM = #{bnum}	
+		AND     A.BPW = #{bpw}
+		
+</select>
+<select id="oeBoardSelect" parameterType="oeboardvo" resultType="oeboardvo">    
+    SELECT  A.BNUM          BNUM
+           ,A.OID           OID
+           ,A.BTITLE        BTITLE
+           ,A.BPHOTO        BPHOTO
+           ,A.BCONTENT      BCONTENT
+           ,A.BPRICE        BPRICE      
+           ,TO_CHAR(A.INSERTDATE, 'YYYY-MM-DD') INSERTDATE
+           ,TO_CHAR(A.UPDATEDATE, 'YYYY-MM-DD') UPDATEDATE
+           ,A.DELETEYN      DELETEYN
+           ,A.BHIT          BHIT  
+           ,B.ONAME         ONAME
+           ,B.OEMAIL        OEMAIL
+    FROM    OEBOARD A
+    LEFT JOIN OEMEMBER B ON A.OID = B.OID
+    WHERE   A.DELETEYN = 'Y'
+    AND     A.BNUM = #{bnum, jdbcType=VARCHAR}   
+</select>
+
+<update id="oeBoardBhit" parameterType="oeboardvo" >
+ 
+	UPDATE  OEBOARD 
+		SET BHIT = (SELECT NVL(MAX(BHIT), 0) + 1 FROM OEBOARD WHERE DELETEYN = 'Y' AND BNUM = #{bnum})
+		   <!--,UPDATEDATE = SYSDATE  -->
+	WHERE   DELETEYN = 'Y'
+	AND     BNUM = #{bnum}		   
+</update>
+<update id="oeBoardUpdate" parameterType="oeboardvo" >
+
+	UPDATE  OEBOARD
+   	   SET	BCONTENT    = #{bcontent}
+	  	   ,UPDATEDATE 	= SYSDATE
+	WHERE   DELETEYN = 'Y'
+	AND     BNUM = #{bnum}	
+</update>
+<update id="oeBoardDelete" parameterType="oeboardvo" >
+
+	UPDATE  OEBOARD
+   	   SET	DELETEYN 	= 'N'
+      	   ,UPDATEDATE  = SYSDATE
+	WHERE  	DELETEYN    = 'Y'
+	AND    	BNUM = #{bnum}	
+</update>
+
+</mapper>     

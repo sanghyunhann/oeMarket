@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+<mapper namespace="oe.market.common.chabun.dao.OeChabunDAO">
+
+<select id="getOeMemberChabun" parameterType="oememvo" resultType="oememvo">
+
+	SELECT NVL(MAX(SUBSTR(A.ONUM, -4)), 0) + 1 ONUM FROM OEMEMBER A
+
+</select>
+
+<select id="getOeBoardChabun" resultType="oeboardvo">
+
+	SELECT NVL(MAX(SUBSTR(A.BNUM, -4)), 0) + 1 BNUM FROM OEBOARD A
+
+</select>
+
+<select id="getOeCommChabun" resultType="oecommvo">
+
+	SELECT NVL(MAX(SUBSTR(A.CNUM, -4)), 0) + 1 CNUM FROM OECOM A
+
+</select>
+
+<select id="getOeLikeChabun" resultType="oelikevo">
+
+	SELECT NVL(MAX(SUBSTR(A.OLNUM, -4)), 0) + 1 OLNUM FROM OELIKE A
+
+</select>
+
+<select id="getOeCartChabun" resultType="oecartvo">
+
+	SELECT NVL(MAX(SUBSTR(A.OCNUM, -4)), 0) + 1 OCNUM FROM OECART A
+
+</select>
+
+</mapper>

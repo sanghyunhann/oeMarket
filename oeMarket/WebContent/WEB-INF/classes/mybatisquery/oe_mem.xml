@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+          
+<mapper namespace="oe.market.mem.dao.OeMemDAO">
+
+<insert id="oeMemInsert" parameterType="oememvo">
+
+	INSERT INTO OEMEMBER (	ONUM, ONAME, OID,
+							OPW, OHP, OGENDER,
+							OZONECODE, OROAD, OROADDETAIL,
+							OJIBUN, MASTER, INSERTDATE,
+							UPDATEDATE, DELETEYN, OEMAIL )
+				VALUES ( 	#{onum, jdbcType=VARCHAR}, #{oname, jdbcType=VARCHAR}, #{oid, jdbcType=VARCHAR},
+                          	#{opw, jdbcType=VARCHAR}, #{ohp, jdbcType=VARCHAR}, #{ogender, jdbcType=VARCHAR},                         		                          	
+                          	#{ozonecode, jdbcType=VARCHAR}, #{oroad, jdbcType=VARCHAR}, #{oroaddetail, jdbcType=VARCHAR},
+                          	#{ojibun, jdbcType=VARCHAR}, 'N' , SYSDATE,
+                          	SYSDATE, 'Y', #{oemail, jdbcType=VARCHAR} )
+
+</insert>
+
+<select id="oeMemSelect" parameterType="oememvo" resultType="oememvo">
+		SELECT 	
+			 A.ONUM 				AS	ONUM
+		   	,A.ONAME 				AS	ONAME
+		   	,A.OID 					AS	OID
+		   	,A.OPW 					AS	OPW
+		   	,A.OHP 					AS	OHP
+		   	,A.OGENDER 				AS 	OGENDER
+		   	,A.OZONECODE 			AS	OZONECODE
+		   	,A.OROAD 				AS	OROAD
+		   	,A.OROADDETAIL 			AS	OROADDETAIL
+		   	,A.OJIBUN 				AS	OJIBUN
+		   	,A.OEMAIL 				AS	OEMAIL
+		   	,A.MASTER 				AS	MASTER
+		   	,A.DELETEYN 			AS	DELETEYN		   	   	
+		    ,TO_CHAR(TO_DATE(A.INSERTDATE), 'YYYY-MM-DD') AS	INSERTDATE 
+		    ,TO_CHAR(TO_DATE(A.UPDATEDATE), 'YYYY-MM-DD') AS	UPDATEDATE	
+	FROM 	 OEMEMBER A
+	WHERE 	 A.DELETEYN = 'Y'
+	AND      A.OID = #{oid, jdbcType=VARCHAR}
+
+</select>
+
+<update id="oeMemUpdate" parameterType="oememvo">
+
+UPDATE OEMEMBER
+   		SET  OHP 			= #{ohp, jdbcType=VARCHAR}	
+	  		,OPW 			= #{opw, jdbcType=VARCHAR}					
+	  		,OEMAIL 		= #{oemail, jdbcType=VARCHAR}				
+	  		,OZONECODE 		= #{ozonecode, jdbcType=VARCHAR}		    
+	  		,OROAD	 		= #{oroad, jdbcType=VARCHAR}				
+	  		,OROADDETAIL	= #{oroaddetail, jdbcType=VARCHAR}		
+      		,OJIBUN		 	= #{ojibun, jdbcType=VARCHAR}			
+	  		,UPDATEDATE 	= SYSDATE
+	WHERE    DELETEYN = 'Y'
+	AND      ONUM = #{onum, jdbcType=VARCHAR}
+</update>
+
+<update id="oeMemDelete" parameterType="oememvo">
+	UPDATE  OEMEMBER
+	   SET  DELETEYN = 'N'
+	       ,UPDATEDATE = SYSDATE
+	WHERE	DELETEYN = 'Y'
+	  AND	ONUM = #{onum, jdbcType=VARCHAR}
+</update>
+
+<select id="oeLogin" parameterType="oememvo" resultType="oememvo">
+
+	SELECT	 A.ONUM 				AS	ONUM
+		   	,A.ONAME 				AS	ONAME
+		   	,A.OID 					AS	OID
+		   	,A.OPW 					AS	OPW
+		   	,A.OHP 					AS	OHP
+		   	,A.OGENDER 				AS 	OGENDER
+		   	,A.OZONECODE 			AS	OZONECODE
+		   	,A.OROAD 				AS	OROAD
+		   	,A.OROADDETAIL 			AS	OROADDETAIL
+		   	,A.OJIBUN 				AS	OJIBUN
+		   	,A.OEMAIL 				AS	OEMAIL
+		   	,A.MASTER 				AS	MASTER
+		   	,A.DELETEYN 			AS	DELETEYN		   	   	
+		    ,TO_CHAR(TO_DATE(A.INSERTDATE), 'YYYY-MM-DD') AS	INSERTDATE 
+		    ,TO_CHAR(TO_DATE(A.UPDATEDATE), 'YYYY-MM-DD') AS	UPDATEDATE	
+	  FROM	 OEMEMBER A
+	 WHERE	 A.DELETEYN = 'Y'
+	  AND	 A.OID = #{oid, jdbcType=VARCHAR}
+	  AND	 A.OPW = #{opw, jdbcType=VARCHAR}
+
+
+</select>
+
+<select id="oeIdCheck" parameterType="oememvo" resultType="oememvo">
+
+	SELECT	 A.OID			AS OID
+	  FROM	 OEMEMBER A
+	 WHERE	 A.DELETEYN = 'Y'
+	  AND	 A.OID = #{oid, jdbcType=VARCHAR}
+
+</select>
+	
+
+
+</mapper>

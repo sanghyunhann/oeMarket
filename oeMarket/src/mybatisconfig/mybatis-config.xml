@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+		  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<!-- 회원, 게시판 -->
+		<typeAlias type="oe.market.mem.vo.OeMemVO" alias="oememvo"/>
+		<typeAlias type="oe.market.board.vo.OeBoardVO" alias="oeboardvo"/>
+		<typeAlias type="oe.market.comm.vo.OeCommVO" alias="oecommvo"/>
+		
+		<!--  게시판 좋아요  -->
+		<typeAlias type="oe.market.like.vo.OeLikeVO" alias="oelikevo"/>	
+		<typeAlias type="oe.market.cart.vo.OeCartVO" alias="oecartvo"/>
+	</typeAliases>
+</configuration>

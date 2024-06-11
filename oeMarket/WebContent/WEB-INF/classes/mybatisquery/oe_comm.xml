@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="oe.market.comm.dao.OeCommDAO">
+
+	<insert id="oeCommInsert" parameterType="oecommvo">
+
+		INSERT INTO OECOM(
+							CNUM,
+							BNUM,
+							OID,
+							CCONTENT,
+							INSERTDATE,
+							DELETEYN
+							)
+							VALUES
+							(
+							#{cnum, jdbcType=VARCHAR},
+							#{bnum, jdbcType=VARCHAR},
+							#{oid, jdbcType=VARCHAR},
+							#{ccontent, jdbcType=VARCHAR},
+							SYSDATE,
+							'Y'
+		)
+	</insert>
+
+	<select id="oeCommSelectAll" parameterType="oecommvo"
+		resultType="oecommvo">
+
+		SELECT 	A.CNUM CNUM
+				,A.BNUM BNUM
+				,A.OID OID
+				,A.CCONTENT CCONTENT
+				,A.INSERTDATE INSERTDATE
+		FROM 	OECOM A 
+		WHERE 	DELETEYN = 'Y'
+		AND 	A.BNUM = #{bnum}
+		ORDER BY 1 DESC
+	</select>
+
+	<update id="oeCommDelete" parameterType="oecommvo">
+
+		UPDATE 	OECOM
+			SET DELETEYN = 'N',
+		INSERTDATE = SYSDATE
+		WHERE DELETEYN = 'Y'
+		AND CNUM = #{cnum}
+
+	</update>
+	
+	    <select id="getCommentOwnerId" parameterType="string" resultType="string">
+        SELECT OID
+        FROM OECOM
+        WHERE CNUM = #{cnum}
+    </select>
+
+
+</mapper>
