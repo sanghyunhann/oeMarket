@@ -19,7 +19,7 @@
     Object objPaging = request.getAttribute("pagingOBVO");
     OeBoardVO pagingOBVO = (OeBoardVO) objPaging;
     if(pagingOBVO != null){
-    	 pageSize = Integer.parseInt(pagingOBVO.getPageSize()) > 0 ? Integer.parseInt(pagingOBVO.getPageSize()) : pageSize;
+         pageSize = Integer.parseInt(pagingOBVO.getPageSize()) > 0 ? Integer.parseInt(pagingOBVO.getPageSize()) : pageSize;
          groupSize = Integer.parseInt(pagingOBVO.getGroupSize()) > 0 ? Integer.parseInt(pagingOBVO.getGroupSize()) : groupSize;
          curPage = Integer.parseInt(pagingOBVO.getCurPage()) > 0 ? Integer.parseInt(pagingOBVO.getCurPage()) : curPage;
     }
@@ -47,86 +47,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Jua&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // 글 영역 클릭 이벤트 처리
-            $(document).on("click", ".boardItem", function() {
-                var bnum = $(this).data("bnum"); // 해당 글의 번호 가져오기
-                window.location.href = "boardSelect.oe?bnum=" + bnum; // 해당 글의 선택 페이지로 이동
-            });
-
-            function openPopup() {
-                var screenWidth = window.screen.width;
-                var screenHeight = window.screen.height;
-
-                // 팝업 창 크기 정보
-                var popupWidth = 600;
-                var popupHeight = 600;
-
-                // 팝업 창 중앙 위치 계산
-                var popupX = (screenWidth - popupWidth) / 2;
-                var popupY = (screenHeight - popupHeight) / 2;
-
-                // 팝업 창 열기
-                var popupWindow = window.open('loginForm.oe', 'loginPopup', 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + popupX + ',top=' + popupY);
-
-                var timer = setInterval(function() {
-                    if (popupWindow.closed) {
-                        clearInterval(timer);
-                        window.location.reload();
-                    }
-                }, 1000);
-            }
-            // 글쓰기 버튼 클릭 이벤트 처리
-            $('#insertBtn').on('click', function() {
-                var loginRequired = '<%= session.getAttribute("loginRequired") %>';
-                if (loginRequired == 'true') {
-                    if (confirm('로그인을 해야 이용 가능한 기능입니다. 로그인을 하시겠습니까?')) {
-                        openPopup();
-                    } else {
-                        window.location.href = 'boardSelectAll.oe';
-                    }
-                } else {
-                    window.location.href = 'boardForm.oe'; // 글쓰기 페이지로 이동
-                }
-            });
-
-            // 날짜를 '몇 시간 전' 형식으로 변환하는 함수
-            function timeAgo(dateString) {
-                const now = new Date();
-                const date = new Date(dateString);
-                const diff = now - date; // 차이(ms 단위)
-                const minutes = Math.floor(diff / 1000 / 60);
-                const hours = Math.floor(minutes / 60);
-                const days = Math.floor(hours / 24);
-                if (days > 0) return days + '일 전';
-                if (hours > 0) return hours + '시간 전';
-                if (minutes > 0) return minutes + '분 전';
-                return '방금 전';
-            }
-            document.querySelectorAll('.updatedate').forEach(function(element) {
-                const dateString = element.getAttribute('data-date');
-                element.textContent = timeAgo(dateString);
-            });
-        });
-    </script>
-    <style>
-        .card-img-top {
-            width: 100%;
-            height: auto;
-            max-height: 300px; /* 원하는 최대 높이 설정 */
-            object-fit: cover; /* 이미지 비율을 유지하며 카드 크기에 맞추기 */
-        }
-        .card-body {
-            text-align: left;
-        }
-        .container {
-            margin-top: 20px;
-        }
-        .boardItem {
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body class="hoian-kr">
     <jsp:include page="/WEB-INF/view/header.jsp" />
@@ -143,7 +63,6 @@
                     for (int i = 0; i < nCnt; i++) {
                         OeBoardVO _obvo = list.get(i);
                         // 페이징 세팅
-                        
                         totalCount = Integer.parseInt(_obvo.getTotalCount());
                         if (i % 3 == 0 && i != 0) {
                 %>
@@ -186,5 +105,70 @@
         </form>
     </div>
     <jsp:include page="/WEB-INF/view/footer.jsp" />
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // 글 영역 클릭 이벤트 처리
+            $(document).on("click", ".boardItem", function() {
+                var bnum = $(this).data("bnum"); // 해당 글의 번호 가져오기
+                window.location.href = "boardSelect.oe?bnum=" + bnum; // 해당 글의 선택 페이지로 이동
+            });
+
+            function openPopup() {
+                var screenWidth = window.screen.width;
+                var screenHeight = window.screen.height;
+
+                // 팝업 창 크기 정보
+                var popupWidth = 600;
+                var popupHeight = 600;
+
+                // 팝업 창 중앙 위치 계산
+                var popupX = (screenWidth - popupWidth) / 2;
+                var popupY = (screenHeight - popupHeight) / 2;
+
+                // 팝업 창 열기
+                var popupWindow = window.open('loginForm.oe', 'loginPopup', 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + popupX + ',top=' + popupY);
+
+                var timer = setInterval(function() {
+                    if (popupWindow.closed) {
+                        clearInterval(timer);
+                        window.location.reload();
+                    }
+                }, 1000);
+            }
+
+            // 글쓰기 버튼 클릭 이벤트 처리
+            $('#insertBtn').on('click', function() {
+                var loginRequired = '<%= session.getAttribute("loginRequired") %>';
+                if (loginRequired == 'true') {
+                    if (confirm('로그인을 해야 이용 가능한 기능입니다. 로그인을 하시겠습니까?')) {
+                        openPopup();
+                    } else {
+                        window.location.href = 'boardSelectAll.oe';
+                    }
+                } else {
+                    window.location.href = 'boardForm.oe'; // 글쓰기 페이지로 이동
+                }
+            });
+
+            // 날짜를 '몇 시간 전' 형식으로 변환하는 함수
+            function timeAgo(dateString) {
+                const now = new Date();
+                const date = new Date(dateString);
+                const diff = now - date; // 차이(ms 단위)
+                const minutes = Math.floor(diff / 1000 / 60);
+                const hours = Math.floor(minutes / 60);
+                const days = Math.floor(hours / 24);
+                if (days > 0) return days + '일 전';
+                if (hours > 0) return hours + '시간 전';
+                if (minutes > 0) return minutes + '분 전';
+                return '방금 전';
+            }
+
+            document.querySelectorAll('.updatedate').forEach(function(element) {
+                const dateString = element.getAttribute('data-date');
+                element.textContent = timeAgo(dateString);
+            });
+        });
+    </script>
 </body>
 </html>
