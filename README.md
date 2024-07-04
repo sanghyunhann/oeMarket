@@ -3,7 +3,7 @@
 - 개발환경
   - OS : Window 10
   - IDE : Eclipse
-  - Language : jsp, html, .. 
+  - Language : JAVA SPRING, JSP, HTML, XML ... 
 - 프로젝트 목적
 - 스프링을 활용한 웹 페이지로 사용자들이 회원가입을 통해 물건 거래 판매 게시물을 작성할 수 있고 댓글을 통해 거래가 가능한 웹 페이지
 
