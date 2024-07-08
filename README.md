@@ -1,9 +1,12 @@
 # 중고거래 게시판 (오이마켓)
 - 개발기간 : 2024.06.03~2024.06.11 (5일/4명)
 - 개발환경
-  - OS : Window 10
-  - IDE : Eclipse
-  - Language : JAVA SPRING, JSP, HTML, XML ... 
+  - OS: Windows 10
+  - IDE: Eclipse
+  - Language: HTML, CSS, JavaScript, JSP, Java, Spring
+  - Database: Oracle SQL
+  - Web Server: Apache
+  - Version Control: GitHub
 - 프로젝트 목적
 - 스프링을 활용한 웹 페이지로 사용자들이 회원가입을 통해 물건 거래 판매 게시물을 작성할 수 있고 댓글을 통해 거래가 가능한 웹 페이지
 
