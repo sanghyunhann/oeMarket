@@ -18,16 +18,16 @@
 
 ## UI
 1. 메인
-![01](oeMarket/ui/01.png)<br/><br/>
+![01](oeMarket/ui/1.png)<br/><br/>
 2. 회원가입
-![02](oeMarket/ui/02.png)<br/><br/>
+![02](oeMarket/ui/2.png)<br/><br/>
 3. 상품등록(글 작성)
-![05](oeMarket/ui/05.png)<br/><br/>
+![05](oeMarket/ui/3.png)<br/><br/>
 4. 판매글 목록 
-![03](oeMarket/ui/03.png)<br/><br/>
+![03](oeMarket/ui/4.png)<br/><br/>
 5. 내용보기
-![04](oeMarket/ui/04.png)<br/><br/>
+![04](oeMarket/ui/5.png)<br/><br/>
 6. 회원정보 수정 
-![06](oeMarket/ui/06.png)<br/><br/>
+![06](oeMarket/ui/6.png)<br/><br/>
 7. 찜 목록 조회
-![07](oeMarket/ui/07.png)<br/><br/>
+![07](oeMarket/ui/7.png)<br/><br/>
